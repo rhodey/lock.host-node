@@ -1,0 +1,20 @@
+{
+  "name": "lock.host-node",
+  "version": "0.1.0",
+  "description": "lock.host node starter",
+  "homepage": "https://lock.host",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rhodey/lock.host-node.git"
+  },
+  "dependencies": {
+    "openai": "^4.86.1",
+    "@solana/web3.js": "^1.98.4",
+    "libsodium-wrappers": "^0.7.15",
+    "undici": "^7.15.0",
+    "cookie": "^1.0.2",
+    "bip39": "^3.1.0"
+  },
+  "devDependencies": { }
+}

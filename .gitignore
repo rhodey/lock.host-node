@@ -1,0 +1,8 @@
+dist/
+.env*
+ca\.*
+cert\.*
+node/node_modules
+*\.swp
+*\.tar
+.DS_Store
