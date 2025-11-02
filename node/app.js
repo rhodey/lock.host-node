@@ -31,9 +31,12 @@ function on400(request, response) {
 }
 
 function paramsOfPath(path) {
-  const query = path.split('?')[1]
-  if (!query) { return {} }
-  return Object.fromEntries(new URLSearchParams(query))
+  try {
+    const query = path.split('?')[1]
+    return Object.fromEntries(new URLSearchParams(query))
+  } catch (err) {
+    return {}
+  }
 }
 
 // called by user

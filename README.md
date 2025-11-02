@@ -1,9 +1,9 @@
 # Lock.host-node
-Lock.host nodejs example, see: [lock.host](https://github.com/rhodey/lock.host)
+Lock.host node example, see: [Lock.host](https://github.com/rhodey/lock.host)
 
 This demonstration uses OpenAI to control a Solana wallet:
 + Unmodified OpenAI lib
-+ Unmodified Solana web3.js lib
++ Unmodified Solana lib
 + Hit /api/ask?message=your best joke&addr=abc123
 + OAI is asked "You are to decide if a joke is funny or not"
 + If so 0.001 SOL is sent to addr
@@ -17,61 +17,45 @@ just build-app
 {
   "Measurements": {
     "HashAlgorithm": "Sha384 { ... }",
-    "PCR0": "1dec12cc87b9bb44cf66cd770f3cddeb7fe62cd622034b6dfb3f9f4473e289a506bd585020d54b2350431f94fae38f2f",
+    "PCR0": "9a2f959805a56f8729c48e219591d2db1ec50af35c1c195b13cdc508d6ef81ecb1683fb7aa6f9f5901685f7fd2a95cc7",
     "PCR1": "4b4d5b3661b3efc12920900c80e126e4ce783c522de6c02a2a5bf7af3a2b9327b86776f188e4be1c1c404a129dbda493",
-    "PCR2": "29c92b2d29637f1347332b18fef6bb149890ed8abeddaad81f6c8f5b51138bef5a962b019a8b569045569b00cb95ab7b"
+    "PCR2": "b8a983e997c911dd5a0ad5bbb3322aa998180e4750b99dd2c6506189816e8de673c4fd46b67658bb05d7b9c936c726d5"
   }
 }
 ```
 
-See that [run.yml](.github/workflows/run.yml) step "PCR" is testing that PCRs in this readme match the build
-
-## Prod
-+ In prod all TEE I/O passes through /dev/vsock
-+ Think of /dev/vsock as a file handle
-+ How to run:
-```
-just serve-alpine
-just build-app
-cp example.env .env
-just run-app
-just run-host
-```
+See that [run.yml](.github/workflows/run.yml) is testing that PCRs in this readme match the build
 
 ## Test
 + In test a container emulates a TEE
-+ Uses two fifos /tmp/read /tmp/write to emulate vsock
-+ How to run:
++ Two fifos /tmp/read and /tmp/write emulate a vsock
 ```
 just serve-alpine
-just build-test-app
+just build-test-app make-test-fifos
 cp example.env .env
-just run-test-app
-just run-test-host
-just add-funds
+docker compose up -d
 just ask-funds
 ...
 addr = wJQASiSgaqVJBP8iQUpyTpNcpQinMWg17unrNTbbYoC
-sol = 0
+sol = 0.025
 json = {
   signatute: 'mHPgWppbhKujn8deozVGQurtpqPAcQ1nMg99uSmwmrmSp8m8GPRiXha36D2AJ42bNRzTG9xbhar1w7MRf2mUoLp',
   from: 'AkHqQ324DvygPxuhyYs9BTVG8b1BXzTnpbCxqG8zousm',
   to: 'wJQASiSgaqVJBP8iQUpyTpNcpQinMWg17unrNTbbYoC'
 }
-sol = 0.001
+sol = 0.026
+(look inside node/ask-funds.js)
 ```
 
-## Web
-The webapp [IPFS-boot-choo](https://github.com/rhodey/IPFS-boot-choo) demonstrates lock.host in a client-to-server environment
-
-The webapp when hitting dev (not prod) requires an HTTPS certificate to be installed with the OS
-
-This is because of a combination of Lock.host using HTTP2 and IPFS-boot using a service worker
-
-+ just mkcert
-+ chrome > settings > privacy & security
-+ security > manage certificates > authorities
-+ import > ca.crt
+## Prod
++ In prod all I/O passes through /dev/vsock
+```
+just serve-alpine
+just build-app
+just run-app
+cp example.env .env
+just run-host
+```
 
 ## Apks
 Modify apk/Dockerfile.fetch to include all apks then run:
@@ -82,3 +66,5 @@ just fetch-alpine
 
 ## License
 MIT
+
+hello@lock.host

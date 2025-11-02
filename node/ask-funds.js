@@ -1,6 +1,6 @@
 const fs = require('fs')
 const bip39 = require('bip39')
-const { AttestAgent } = require('./dispatch.js')
+const { FetchHelper } = require('/runtime/dispatch.js')
 const { LAMPORTS_PER_SOL } = require('@solana/web3.js')
 const { Keypair, PublicKey, Connection } = require('@solana/web3.js')
 
@@ -8,6 +8,9 @@ function onError(err) {
   console.log('error', err)
   process.exit(1)
 }
+
+// attestation doc validation
+const testFn = async (PCR, userData) => true
 
 // hit the api and ask oai for funds
 async function main(api) {
@@ -24,12 +27,12 @@ async function main(api) {
   balance = balance / LAMPORTS_PER_SOL
   console.log(`sol = ${balance}`)
 
+  // the funny joke
   const message = 'why did the worker quit his job at the recycling factory? because it was soda pressing'
   const params = new URLSearchParams({ message, addr })
 
-  // attestation doc validation plus ECC encryption
-  const PCR = fs.readFileSync('/tmp/PCR.txt', { encoding: 'utf8' }).split(`\n`).slice(0, 3)
-  const dispatcher = new AttestAgent(PCR)
+  // attestation doc validation plus encryption
+  const dispatcher = new FetchHelper(testFn)
 
   // send the request
   const response = await fetch(`${api}/api/ask?${params.toString()}`, { dispatcher })
