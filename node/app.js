@@ -88,7 +88,7 @@ async function askOpenAi(request, response) {
   ]
 
   let reply = await oai.chat.completions.create({
-    model: 'gpt-4o', temperature: 1,
+    model: 'gpt-4o-mini', temperature: 1,
     tools, tool_choice: { type: 'function', 'function': { name: 'record_if_joke_was_funny' }},
     messages,
   })
@@ -133,7 +133,7 @@ async function askOpenAi(request, response) {
   })
 
   const from = solkey.publicKey.toBase58()
-  const data = JSON.stringify({ signature, from, to: addr })
+  const data = JSON.stringify({ signature, from, to: addr, thoughts: reply.thoughts })
 
   writeHead(response, 200)
   response.end(data)

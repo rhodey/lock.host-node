@@ -13,9 +13,9 @@ function onError(err) {
 const testFn = async (PCR, userData) => true
 
 // hit the api and ask oai for funds
-async function main(api) {
+async function main(api, joke) {
   // receiver
-  const mnemonic = 'test for ask'
+  const mnemonic = 'seed for test'
   const seed = bip39.mnemonicToSeedSync(mnemonic, '')
   const solkey = Keypair.fromSeed(seed.subarray(0, 32))
   const addr = solkey.publicKey.toBase58()
@@ -28,7 +28,7 @@ async function main(api) {
   console.log(`sol = ${balance}`)
 
   // the funny joke
-  const message = 'why did the worker quit his job at the recycling factory? because it was soda pressing'
+  const message = joke
   const params = new URLSearchParams({ message, addr })
 
   // attestation doc validation plus encryption
@@ -41,8 +41,8 @@ async function main(api) {
   const data = await response.json()
   console.log('json =', data)
 
-  // thoughts = reason for denial
-  if (data.thoughts) { return }
+  // no signature = no reward
+  if (!data.signature) { return }
 
   // balance after ask
   balance = await sol.getBalance(solkey.publicKey)
@@ -50,6 +50,6 @@ async function main(api) {
   console.log(`sol = ${balance}`)
 }
 
-const args = process.argv.slice(2)
-const [api] = args
-main(api).catch(onError)
+const api = process.argv.slice(2)[0]
+const joke = process.argv.slice(3).join(' ')
+main(api, joke).catch(onError)
