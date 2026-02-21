@@ -17,9 +17,9 @@ just build-app
 {
   "Measurements": {
     "HashAlgorithm": "Sha384 { ... }",
-    "PCR0": "a858981f4dd9399b6de65c021b51631f383a3559b7cc78d44ecf84c9bb43d3640cb6adb6d483bf50200b78d07a975453",
+    "PCR0": "74c2ca88f30ff02900d39b7a3927fba900da7340f9c7b5b6c8250e2355f9a7360398f848d750aabbfbfbeb28baccaf1b",
     "PCR1": "4b4d5b3661b3efc12920900c80e126e4ce783c522de6c02a2a5bf7af3a2b9327b86776f188e4be1c1c404a129dbda493",
-    "PCR2": "b2fb1212bba8826d5feccfb6d43a9317d3789851cd6c0c57be241a4cfeef7401cc2e51fb245fbcbf0df153ddebfdd5af"
+    "PCR2": "0f62ef55c944aeb71144f1804aa6416a4a9c5a0406dc7f454cbf3a24a7d00ddff26edf1ca9b062a79103343f3ec36ef3"
   }
 }
 ```
