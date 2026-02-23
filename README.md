@@ -4,7 +4,7 @@ Lock.host node example, see: [Lock.host](https://github.com/rhodey/lock.host)
 This demonstration uses OpenAI to control a Solana wallet:
 + Unmodified OpenAI lib
 + Unmodified Solana lib
-+ Hit /api/ask?message=your best joke&addr=abc123
++ Hit /api/joke?message=your best joke&addr=abc123
 + OAI is asked "You are to decide if a joke is funny or not"
 + If so 0.001 SOL is sent to addr
 
@@ -17,9 +17,9 @@ just build-app
 {
   "Measurements": {
     "HashAlgorithm": "Sha384 { ... }",
-    "PCR0": "80477e19a6b980f839f0aa858ca60bd01f4212e46aec3873fcd8284c97e9954b50011d5282ce4c8159539e900fc39786",
+    "PCR0": "aaae1d110377748f8193d18de25739b8fdc6edc6bf22a7dc7b876272ef5b64febb139fe16427dcf722935a9a6eeb479e",
     "PCR1": "4b4d5b3661b3efc12920900c80e126e4ce783c522de6c02a2a5bf7af3a2b9327b86776f188e4be1c1c404a129dbda493",
-    "PCR2": "a7bef24e6317debe02bb056bc9c1b1be10a859acffd9ec80ab5515fcb0e5b1ac08b7ae77ab221df1f1f61b1823e0b65a"
+    "PCR2": "5e83bd3182f9284ece7065ce8d79f42df15d7531f688e98ba42eeb9d101e3f34b7bd5c366f36048bc2d108e90c27dbca"
   }
 }
 ```
@@ -34,7 +34,7 @@ just serve-alpine
 just build-test-app make-test-fifos
 cp example.env .env
 docker compose up -d
-just ask-funds 'why did the worker quit his job at the recycling factory? because it was soda pressing.'
+just joke 'why did the worker quit his job at the recycling factory? because it was soda pressing.'
 ...
 addr = Do3F8NmohXPayS3xmos6CmqRXPD9DjCzK8Ct8sCc6UkA
 sol = 0.002
@@ -45,7 +45,7 @@ json = {
   thoughts: "The joke plays on the pun between 'so depressing' and 'soda pressing', which is clever and light-hearted. It evokes a chuckle due to its wordplay."
 }
 sol = 0.003
-(look inside node/ask-funds.js)
+(look inside node/joke.js)
 ```
 
 ## Prod
