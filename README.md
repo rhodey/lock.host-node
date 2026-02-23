@@ -4,7 +4,7 @@ Lock.host node example, see: [Lock.host](https://github.com/rhodey/lock.host)
 This demonstration uses OpenAI to control a Solana wallet:
 + Unmodified OpenAI lib
 + Unmodified Solana lib
-+ Hit /api/ask?message=your best joke&addr=abc123
++ Hit /api/joke?message=your best joke&addr=abc123
 + OAI is asked "You are to decide if a joke is funny or not"
 + If so 0.001 SOL is sent to addr
 
@@ -34,7 +34,7 @@ just serve-alpine
 just build-test-app make-test-fifos
 cp example.env .env
 docker compose up -d
-just ask-funds 'why did the worker quit his job at the recycling factory? because it was soda pressing.'
+just joke 'why did the worker quit his job at the recycling factory? because it was soda pressing.'
 ...
 addr = Do3F8NmohXPayS3xmos6CmqRXPD9DjCzK8Ct8sCc6UkA
 sol = 0.002
@@ -45,7 +45,7 @@ json = {
   thoughts: "The joke plays on the pun between 'so depressing' and 'soda pressing', which is clever and light-hearted. It evokes a chuckle due to its wordplay."
 }
 sol = 0.003
-(look inside node/ask-funds.js)
+(look inside node/joke.js)
 ```
 
 ## Prod

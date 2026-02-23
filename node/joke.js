@@ -35,7 +35,7 @@ async function main(api, joke) {
   const dispatcher = new FetchHelper(testFn)
 
   // send the request
-  const response = await fetch(`${api}/api/ask?${params.toString()}`, { dispatcher })
+  const response = await fetch(`${api}/api/joke?${params.toString()}`, { dispatcher })
   !response.ok && onError(new Error(`http ${response.status}`))
 
   const data = await response.json()

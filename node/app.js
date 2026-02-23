@@ -40,8 +40,8 @@ function paramsOfPath(path) {
 }
 
 // called by user
-async function getWallet(request, response) {
-  console.log('got wallet request')
+async function getBalance(request, response) {
+  console.log('get balance')
   const params = paramsOfPath(request.url)
   const pubkey = params.addr ? new PublicKey(params.addr) : solkey.publicKey
   let balance = await sol.getBalance(pubkey)
@@ -74,8 +74,8 @@ const tools = [{
 }]
 
 // called by user
-async function askOpenAi(request, response) {
-  console.log('got oai request')
+async function getJoke(request, response) {
+  console.log('get joke')
   const params = paramsOfPath(request.url)
   const { addr, message } = params
   if (!message) { return on400(request, response) }
@@ -98,7 +98,7 @@ async function askOpenAi(request, response) {
   try {
     reply = reply.choices[0].message.tool_calls[0]
     reply = JSON.parse(reply.function.arguments)
-    console.log('got oai reply', reply)
+    console.log('oai reply', reply)
     funny = reply.decision === 'funny'
   } catch (err) {
     on500(err, request, response)
@@ -106,14 +106,12 @@ async function askOpenAi(request, response) {
   }
 
   if (!funny) {
-    console.log('oai = not funny')
     const data = JSON.stringify({ thoughts: reply.thoughts })
     writeHead(response, 200)
     response.end(data)
     return
   }
 
-  console.log('oai = funny')
   const lamportsToSend = 1_000_000
   const txn = new Transaction().add(
     SystemProgram.transfer({
@@ -123,8 +121,6 @@ async function askOpenAi(request, response) {
     })
   )
   const signature = await sendAndConfirmTransaction(sol, txn, [solkey])
-  console.log(`signature = ${signature}`)
-
   const { blockhash, lastValidBlockHeight } = await sol.getLatestBlockhash()
   await sol.confirmTransaction({
     blockhash,
@@ -158,10 +154,10 @@ const httpServer = http.createServer(async (request, response) => {
 
   try {
 
-    if (path.startsWith('/api/wallet')) {
-      await getWallet(request, response)
-    } else if (path.startsWith('/api/ask')) {
-      await askOpenAi(request, response)
+    if (path.startsWith('/api/balance')) {
+      await getBalance(request, response)
+    } else if (path.startsWith('/api/joke')) {
+      await getJoke(request, response)
     } else {
       writeHead(response, 404)
       response.end('404')

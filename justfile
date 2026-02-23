@@ -59,11 +59,8 @@ build-test-app:
     just make-test-net
     {{sudo}} docker buildx build --platform="linux/amd64" --build-arg PROD=false -f Dockerfile.app -t lockhost-node-test-app .
 
-add-funds:
-    {{sudo}} docker run --rm --entrypoint /app/add-funds.sh --env-file .env lockhost-node-test-app
-
-ask-funds joke:
-    {{sudo}} docker run --rm --entrypoint /app/ask-funds.sh --network locknet --env-file .env lockhost-node-test-app https://host:8888 {{joke}}
+joke joke:
+    {{sudo}} docker run --rm --entrypoint /app/joke.sh --network locknet --env-file .env lockhost-node-test-app https://host:8888 {{joke}}
 
 mkcert:
     echo "authorityKeyIdentifier=keyid,issuer" > domains.ext
