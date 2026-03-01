@@ -1,4 +1,4 @@
-# Lock.host-node
+# Lock.host-node (test)
 Lock.host node example, see: [Lock.host](https://github.com/rhodey/lock.host)
 
 This demonstration uses OpenAI to control a Solana wallet:
